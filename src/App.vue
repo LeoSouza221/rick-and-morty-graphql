@@ -22,13 +22,13 @@
         text
       >
         <v-icon>mdi-filmstrip</v-icon>
-        <span class="mr-2">Episodios</span>
+        <span class="mr-2">Episodes</span>
       </v-btn>
       <v-btn
         text
       >
         <v-icon>mdi-account-group</v-icon>
-        <span class="mr-2">Personagens</span>
+        <span class="mr-2">Characters</span>
       </v-btn>
     </v-app-bar>
 
