@@ -2,6 +2,8 @@
   <v-container>
     <v-data-iterator
       :items="results"
+      :page.sync="page"
+      :items-per-page="itemsPerPage"
       hide-default-footer
     >
       <template v-slot:header>
@@ -51,6 +53,15 @@
         </v-row>
       </template>
     </v-data-iterator>
+    <div class="text-center pt-2">
+      <v-pagination
+        v-model="page"
+        circle
+        :length="pageCount"
+        :total-visible="5"
+        color="warning"
+      ></v-pagination>
+    </div>
   </v-container>
 </template>
 
@@ -59,9 +70,16 @@ export default {
   name: 'ListItems',
 
   props: {
+    pageCount: {
+      type: Number,
+      required: true,
+    },
     listName: {
       type: String,
       default: 'List',
+    },
+    paginate: {
+      type: Function,
     },
     results: {
       type: Array,
@@ -74,8 +92,16 @@ export default {
   },
 
   data: () => ({
+    itemsPerPage: 20,
+    page: 1,
     sortBy: '',
     searchValue: '',
   }),
+
+  watch: {
+    page() {
+      this.$emit('paginate', this.page);
+    },
+  },
 };
 </script>

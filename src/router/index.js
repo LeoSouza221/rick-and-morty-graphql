@@ -8,7 +8,7 @@ const routes = [
     path: '/',
     name: 'Episodes',
     component() {
-      return import('../views/Episodes.vue');
+      return import('../views/episodes/Episodes.vue');
     },
   },
 ];
