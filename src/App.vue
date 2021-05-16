@@ -20,12 +20,14 @@
 
       <v-btn
         text
+        to="episodes"
       >
         <v-icon>mdi-filmstrip</v-icon>
         <span class="mr-2">Episodes</span>
       </v-btn>
       <v-btn
         text
+        to="characters"
       >
         <v-icon>mdi-account-group</v-icon>
         <span class="mr-2">Characters</span>
