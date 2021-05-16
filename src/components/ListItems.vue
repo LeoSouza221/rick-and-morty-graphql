@@ -4,8 +4,15 @@
       :items="results"
       :page.sync="page"
       :items-per-page="itemsPerPage"
+      :loading="loading"
       hide-default-footer
     >
+      <template v-slot:loading>
+        <v-progress-linear
+          indeterminate
+          color="white"
+        ></v-progress-linear>
+      </template>
       <template v-slot:header>
         <v-row class="mt-5">
           <v-col cols="12" sm="3">
@@ -16,17 +23,6 @@
           <v-spacer></v-spacer>
           <v-col cols="12" sm="6">
             <v-row>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="searchValue"
-                  clearable
-                  dense
-                  flat
-                  hide-details
-                  prepend-inner-icon="mdi-magnify"
-                  label="Search Episode"
-                ></v-text-field>
-              </v-col>
               <v-col cols="12" sm="6">
                 <v-select
                   v-model="sortBy"
@@ -40,6 +36,18 @@
                   label="Sort by"
                   class="mb-1"
                 ></v-select>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-text-field
+                  v-model="searchValue"
+                  clearable
+                  dense
+                  flat
+                  hide-details
+                  prepend-inner-icon="mdi-magnify"
+                  label="Search Episode"
+                  @input="searchText"
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-col>
@@ -60,6 +68,7 @@
         :length="pageCount"
         :total-visible="5"
         color="warning"
+        @input="changePage"
       ></v-pagination>
     </div>
   </v-container>
@@ -70,6 +79,10 @@ export default {
   name: 'ListItems',
 
   props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     pageCount: {
       type: Number,
       required: true,
@@ -78,7 +91,7 @@ export default {
       type: String,
       default: 'List',
     },
-    paginate: {
+    newSearch: {
       type: Function,
     },
     results: {
@@ -92,15 +105,35 @@ export default {
   },
 
   data: () => ({
+    timeout: null,
     itemsPerPage: 20,
     page: 1,
     sortBy: '',
     searchValue: '',
   }),
 
-  watch: {
-    page() {
-      this.$emit('paginate', this.page);
+  methods: {
+    doNewSearch() {
+      const search = {
+        page: this.page,
+        name: this.searchValue,
+      };
+      this.$emit('newSearch', search);
+    },
+
+    searchText(text) {
+      clearTimeout(this.timeout);
+
+      this.timeout = setTimeout(() => {
+        if (typeof text === 'object' || (text.length && text.length >= 3)) {
+          this.page = 1;
+          this.doNewSearch();
+        }
+      }, 1000);
+    },
+
+    changePage() {
+      this.doNewSearch();
     },
   },
 };

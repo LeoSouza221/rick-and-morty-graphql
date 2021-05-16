@@ -9,7 +9,8 @@
       :results="episodesResults"
       :keys="episodeSortKeys"
       :pageCount="pagination.pages"
-      @paginate="paginate"
+      :loading="$apollo.loading"
+      @newSearch="newSearch"
     >
       <template v-slot:info-cards="{ items }">
         <v-col
@@ -53,8 +54,8 @@ import CardDetails from '@/components/CardDetails.vue';
 import gql from 'graphql-tag';
 import EpisodeDetail from './EpisodeDetail.vue';
 
-const query = gql`query getEpisodes ($page: Int) {
-  episodes (page: $page) {
+const query = gql`query getEpisodes ($page: Int, $filter: FilterEpisode) {
+  episodes (page: $page, filter: $filter) {
     info {
       count
       pages
@@ -96,16 +97,8 @@ export default {
         value: 'name',
       },
       {
-        name: 'Air Date',
-        value: 'air_date',
-      },
-      {
         name: 'Episode',
         value: 'episode',
-      },
-      {
-        name: 'Character',
-        value: 'character',
       },
     ],
   }),
@@ -126,10 +119,11 @@ export default {
       this.dialog = true;
     },
 
-    paginate(page) {
+    newSearch({ page, name = '' }) {
       this.$apollo.queries.episodes.fetchMore({
         variables: {
           page,
+          filter: { name },
         },
 
         updateQuery: (previousResult, { fetchMoreResult }) => {
