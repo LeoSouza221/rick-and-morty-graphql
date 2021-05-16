@@ -87,7 +87,7 @@ export default {
     dialog: false,
     episode: {},
     pagination: {
-      page: 1,
+      pages: 1,
     },
     episodesResults: [],
     episodeSortKeys: [
