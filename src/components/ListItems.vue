@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-data-iterator
-      :items="results"
+      :items="orderedResults"
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
@@ -111,6 +111,21 @@ export default {
     sortBy: '',
     searchValue: '',
   }),
+
+  computed: {
+    orderedResults() {
+      const newArray = this.results;
+      return newArray.sort((a, b) => {
+        if (a[this.sortBy] < b[this.sortBy]) {
+          return -1;
+        }
+        if (a[this.sortBy] > b[this.sortBy]) {
+          return 1;
+        }
+        return 0;
+      });
+    },
+  },
 
   methods: {
     doNewSearch() {
