@@ -1,55 +1,72 @@
 <template>
-  <v-dialog
-    v-model="value"
-    width="500"
-    persistent
-  >
-    <v-card>
-      <card-details
-        :episode="episodeInfo"
-      >
-        <template v-slot:button-detail>
-          <v-btn
-            color="warning"
-            fab
-            dark
-            small
-            absolute
-            right
-            @click="closeModal"
+  <div>
+    <slot name="button-detail">
+    </slot>
+    <v-card-title class="subheading font-weight-bold">
+      {{ episode.name }}
+    </v-card-title>
+    <v-divider></v-divider>
+    <v-list dense>
+      <v-list-item>
+        <v-list-item-content>Date:</v-list-item-content>
+        <v-list-item-content class="align-end">
+          {{ episode.air_date }}
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item>
+        <v-list-item-content>Episode:</v-list-item-content>
+        <v-list-item-content class="align-end">
+          {{ episode.episode }}
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item>
+        <v-list-item-content>Characters:</v-list-item-content>
+      </v-list-item>
+      <v-list-item>
+        <v-chip-group column>
+          <v-chip
+            v-for="(character, index) in limitCharacters(episode.characters)"
+            :key="index"
+            pill
           >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </template>
-      </card-details>
-    </v-card>
-  </v-dialog>
+            <v-avatar left v-if="character.image.length">
+              <v-img :src="character.image"></v-img>
+            </v-avatar>
+            {{ character.name }}
+          </v-chip>
+        </v-chip-group>
+      </v-list-item>
+    </v-list>
+  </div>
 </template>
 
 <script>
-import CardDetails from '@/components/CardDetails.vue';
-
 export default {
   name: 'EpisodeDetail',
 
-  components: {
-    CardDetails,
-  },
-
   props: {
-    value: {
+    hasLimit: {
       type: Boolean,
-      required: true,
+      default: false,
     },
-    episodeInfo: {
+    episode: {
       type: Object,
       required: true,
     },
   },
 
   methods: {
-    closeModal() {
-      this.$emit('value', false);
+    limitCharacters(characterList, n = 10) {
+      let newCharecterList = [];
+
+      if (characterList.length > 10 && this.hasLimit) {
+        newCharecterList = characterList.slice(0, n);
+        newCharecterList.push({ name: '...', image: '' });
+      } else {
+        newCharecterList = characterList;
+      }
+
+      return newCharecterList;
     },
   },
 };

@@ -1,14 +1,14 @@
 <template>
   <v-container>
-    <episode-modal-detail
-      :episodeInfo="episode"
+    <character-modal-detail
+      :characterInfo="character"
       @closeModal="closeModal"
       :dialog="dialog"
     />
     <list-items
-      listName="Episodes"
-      :results="episodesResults"
-      :keys="episodeSortKeys"
+      listName="Characters"
+      :results="characterResults"
+      :keys="characterSortKeys"
       :pageCount="pagination.pages"
       :loading="$apollo.loading"
       @newSearch="newSearch"
@@ -22,8 +22,8 @@
           md="4"
         >
           <v-card>
-            <episode-detail
-              :episode="item"
+            <character-detail
+              :character="item"
               :hasLimit=true
             >
               <template v-slot:button-detail>
@@ -35,13 +35,13 @@
                   absolute
                   bottom
                   right
-                  @click="openEpisodeModal(item)"
-                  v-if="item.characters.length > 10"
+                  @click="openCharacterModal(item)"
+                  v-if="item.episode.length > 10"
                 >
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
               </template>
-            </episode-detail>
+            </character-detail>
           </v-card>
         </v-col>
       </template>
@@ -52,71 +52,67 @@
 <script>
 import ListItems from '@/components/ListItems.vue';
 import gql from 'graphql-tag';
-import EpisodeDetail from './EpisodeDetail.vue';
-import EpisodeModalDetail from './EpisodeModalDetail.vue';
+import CharacterDetail from './CharacterDetail.vue';
+import CharacterModalDetail from './CharacterModalDetail.vue';
 
-const query = gql`query getEpisodes ($page: Int, $filter: FilterEpisode) {
-  episodes (page: $page, filter: $filter) {
+const query = gql`query getCharacters ($page: Int, $filter: FilterCharacter) {
+  characters (page: $page, filter: $filter) {
     info {
       count
       pages
-      next
-      prev
     }
-    results{
+    results {
       id
       name
-      air_date
-      episode
-      characters {
+      location {
         name
-        image
+      }
+      image
+      episode {
+        id
+        name
       }
     }
   }
 }`;
 
 export default {
-  name: 'Episodes',
+  name: 'Characters',
 
   components: {
-    EpisodeDetail,
-    EpisodeModalDetail,
+    CharacterDetail,
+    CharacterModalDetail,
     ListItems,
   },
 
   data: () => ({
     dialog: false,
-    episode: {},
+    character: {},
     pagination: {
       pages: 1,
     },
-    episodesResults: [],
-    episodeSortKeys: [
+    characterResults: [],
+    characterSortKeys: [
       {
         name: 'Name',
         value: 'name',
-      },
-      {
-        name: 'Episode',
-        value: 'episode',
       },
     ],
   }),
 
   apollo: {
-    episodes: {
+    characters: {
       query,
-      result({ data: { episodes: { info, results } } }) {
-        this.episodesResults = results;
+      result({ data: { characters: { info, results } } }) {
+        this.characterResults = results;
         this.pagination = info;
       },
     },
   },
 
   methods: {
-    openEpisodeModal(episode) {
-      this.episode = episode;
+    openCharacterModal(character) {
+      this.character = character;
       this.dialog = true;
     },
 
@@ -125,19 +121,32 @@ export default {
     },
 
     newSearch({ page, name = '' }) {
-      this.$apollo.queries.episodes.fetchMore({
+      this.$apollo.queries.characters.fetchMore({
         variables: {
           page,
           filter: { name },
         },
 
         updateQuery: (previousResult, { fetchMoreResult }) => {
-          const { episodes: { info, results } } = fetchMoreResult;
+          const { characters: { info, results } } = fetchMoreResult;
 
-          this.episodesResults = results;
+          this.characterResults = results;
           this.pagination = info;
         },
       });
+    },
+
+    limitCharacters(episodeList, n = 10) {
+      let newCharecterList = [];
+
+      if (episodeList.length > 10) {
+        newCharecterList = episodeList.slice(0, n);
+        newCharecterList.push({ name: '...', image: '' });
+      } else {
+        newCharecterList = episodeList;
+      }
+
+      return newCharecterList;
     },
   },
 };

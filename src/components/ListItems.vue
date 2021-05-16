@@ -115,11 +115,11 @@ export default {
   computed: {
     orderedResults() {
       const newArray = this.results;
-      return newArray.sort((a, b) => {
-        if (a[this.sortBy] < b[this.sortBy]) {
+      return newArray.sort((previous, currentb) => {
+        if (previous[this.sortBy] < currentb[this.sortBy]) {
           return -1;
         }
-        if (a[this.sortBy] > b[this.sortBy]) {
+        if (previous[this.sortBy] > currentb[this.sortBy]) {
           return 1;
         }
         return 0;
