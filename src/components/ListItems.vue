@@ -17,7 +17,7 @@
         <v-row class="mt-5">
           <v-col cols="12" sm="3">
             <div class="d-flex align-center">
-              <h3>{{ listName }}</h3>
+              <h3 class="title">{{ listName }}</h3>
             </div>
           </v-col>
           <v-spacer></v-spacer>
@@ -46,6 +46,7 @@
                   hide-details
                   prepend-inner-icon="mdi-magnify"
                   label="Search"
+                  class="search-input"
                   @input="searchText"
                 ></v-text-field>
               </v-col>
@@ -140,6 +141,7 @@ export default {
       clearTimeout(this.timeout);
 
       this.timeout = setTimeout(() => {
+        console.log('aqui', text);
         if (typeof text === 'object' || (text.length && text.length >= 3)) {
           this.page = 1;
           this.doNewSearch();
