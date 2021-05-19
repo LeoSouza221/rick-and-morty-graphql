@@ -20,6 +20,11 @@ npm run build
 npm run test:unit
 ```
 
+### Run stoyrbook
+```
+npm run serve:storybook
+```
+
 ### Lints and fixes files
 ```
 npm run lint
