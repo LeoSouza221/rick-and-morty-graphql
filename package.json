@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit --setupTestFrameworkScriptFile=./tests/setup.js --coverage --watch",
     "lint": "vue-cli-service lint",
     "build:storybook": "build-storybook",
     "serve:storybook": "start-storybook -p 6006"

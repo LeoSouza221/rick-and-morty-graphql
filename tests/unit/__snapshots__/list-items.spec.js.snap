@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItems.vue should match with the snapshot 1`] = `
+<div class="container">
+  <div class="v-data-iterator">
+    <div class="row mt-5">
+      <div class="col-sm-3 col-12">
+        <div class="d-flex align-center">
+          <h3 class="title">Test Title</h3>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="col-sm-6 col-12">
+        <div class="row">
+          <div class="col-sm-6 col-12">
+            <div class="v-input mb-1 v-input--hide-details v-input--dense theme--light v-text-field v-text-field--solo-flat v-select">
+              <div class="v-input__control">
+                <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-4" class="v-input__slot">
+                  <div class="v-input__prepend-inner">
+                    <div class="v-input__icon v-input__icon--prepend-inner"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sort-descending theme--light"></i></div>
+                  </div>
+                  <div class="v-select__slot"><label for="input-4" class="v-label theme--light" style="left: 0px; position: absolute;">Sort by</label>
+                    <div class="v-select__selections"><input id="input-4" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+                    <div class="v-input__append-inner">
+                      <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
+                    </div><input type="hidden">
+                  </div>
+                  <div class="v-menu">
+                    <!---->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-12">
+            <div class="v-input search-input v-input--hide-details v-input--dense theme--light v-text-field v-text-field--solo-flat">
+              <div class="v-input__control">
+                <div class="v-input__slot">
+                  <div class="v-input__prepend-inner">
+                    <div class="v-input__icon v-input__icon--prepend-inner"><i aria-hidden="true" class="v-icon notranslate mdi mdi-magnify theme--light"></i></div>
+                  </div>
+                  <div class="v-text-field__slot"><label for="input-8" class="v-label theme--light" style="left: 0px; position: absolute;">Search</label><input id="input-8" type="text"></div>
+                  <div class="v-input__append-inner">
+                    <div class="v-input__icon v-input__icon--clear"><button disabled="disabled" type="button" aria-label="clear icon" class="v-icon notranslate v-icon--disabled v-icon--link mdi mdi-close theme--light"></button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+    <div class="row mt-5">
+      <div class="card-slot">Card Slot</div>
+    </div>
+  </div>
+  <div class="text-center pt-2">
+    <nav role="navigation" aria-label="Pagination Navigation">
+      <ul class="v-pagination v-pagination--circle theme--light">
+        <li><button disabled="disabled" type="button" aria-label="Previous page" class="v-pagination__navigation v-pagination__navigation--disabled"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-left theme--light"></i></button></li>
+        <li><button type="button" aria-current="true" aria-label="Current Page, Page 1" class="v-pagination__item v-pagination__item--active warning">1</button></li>
+        <li><button disabled="disabled" type="button" aria-label="Next page" class="v-pagination__navigation v-pagination__navigation--disabled"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-right theme--light"></i></button></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+`;
