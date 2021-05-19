@@ -10,7 +10,7 @@
       <template v-slot:loading>
         <v-progress-linear
           indeterminate
-          color="white"
+          color="primary"
         ></v-progress-linear>
       </template>
       <template v-slot:header>
@@ -45,7 +45,7 @@
                   flat
                   hide-details
                   prepend-inner-icon="mdi-magnify"
-                  label="Search Episode"
+                  label="Search"
                   @input="searchText"
                 ></v-text-field>
               </v-col>

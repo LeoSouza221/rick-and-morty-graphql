@@ -1,4 +1,3 @@
-
 module.exports = {
   client: {
     service: {
@@ -11,4 +10,4 @@ module.exports = {
       'src/**/*.js',
     ],
   },
-}  
+};
